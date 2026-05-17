@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuizCraft App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-header">
+      <div>
+        <p class="brand">QuizCraft</p>
+        <h1>Simple Quiz App</h1>
+        <p class="subtitle">Play ready-made quizzes or create your own custom quiz.</p>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- HOME SCREEN -->
+      <section id="startScreen" class="screen active">
+        <div class="panel hero-panel">
+          <p class="small-label">Welcome</p>
+          <h2>Pick a quiz to begin</h2>
+          <p>Choose a ready-made quiz below or create your own custom quiz before starting.</p>
+          <div class="hero-points">
+            <span>• One question at a time</span>
+            <span>• Timer for each question</span>
+            <span>• Automatic next question</span>
+          </div>
+        </div>
+
+        <div class="panel intro-panel">
+          <h2>Choose a Quiz</h2>
+          <p>Select one of the ready-made quizzes below to start playing.</p>
+
+          <div class="quiz-grid">
+            <button class="quiz-card" data-quiz="generalKnowledge">
+              <span class="card-tag">Ready-made</span>
+              <h3>General Knowledge</h3>
+              <p>Fun everyday facts and simple trivia.</p>
+            </button>
+
+            <button class="quiz-card" data-quiz="aiBasics">
+              <span class="card-tag">Ready-made</span>
+              <h3>AI Basics</h3>
+              <p>Learn a few simple terms about AI.</p>
+            </button>
+
+            <button class="quiz-card" data-quiz="scienceFun">
+              <span class="card-tag">Ready-made</span>
+              <h3>Science Fun</h3>
+              <p>Easy science questions for quick practice.</p>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel creator-panel">
+          <h2>Create Your Own Quiz</h2>
+          <p>Add your own questions below, then start the custom quiz.</p>
+
+          <div class="creator-form">
+            <label>
+              Quiz Title
+              <input type="text" id="customQuizTitle" placeholder="My Custom Quiz" />
+            </label>
+
+            <label>
+              Question
+              <input type="text" id="questionInput" placeholder="Type your question here" />
+            </label>
+
+            <div class="options-grid">
+              <label>
+                Option 1
+                <input type="text" id="option1Input" placeholder="Option 1" />
+              </label>
+
+              <label>
+                Option 2
+                <input type="text" id="option2Input" placeholder="Option 2" />
+              </label>
+
+              <label>
+                Option 3
+                <input type="text" id="option3Input" placeholder="Option 3" />
+              </label>
+
+              <label>
+                Option 4
+                <input type="text" id="option4Input" placeholder="Option 4" />
+              </label>
+            </div>
+
+            <label>
+              Correct Answer
+              <select id="correctAnswerInput">
+                <option value="0">Option 1</option>
+                <option value="1">Option 2</option>
+                <option value="2">Option 3</option>
+                <option value="3">Option 4</option>
+              </select>
+            </label>
+
+            <label>
+              Time Limit (seconds)
+              <input type="number" id="questionTimeInput" min="5" max="60" step="1" value="10" />
+            </label>
+
+            <div class="creator-actions">
+              <button id="addQuestionBtn" class="primary-btn">Add Question</button>
+              <button id="startCustomQuizBtn" class="secondary-btn">Start Custom Quiz</button>
+              <button id="clearCustomQuizBtn" class="ghost-btn">Clear Custom Quiz</button>
+            </div>
+
+            <p id="creatorMessage" class="message" aria-live="polite"></p>
+
+            <div class="preview-box">
+              <h3>Custom Quiz Preview</h3>
+              <p id="customCount">No questions added yet.</p>
+              <ul id="customPreviewList" class="preview-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIZ SCREEN -->
+      <section id="quizScreen" class="screen">
+        <div class="panel quiz-panel">
+          <div class="quiz-topbar">
+            <div>
+              <p class="small-label">Quiz</p>
+              <h2 id="quizTitle">Quiz Title</h2>
+            </div>
+            <div class="score-box">
+              <p id="questionCounter">Question 1 of 5</p>
+              <p id="scoreCounter">Score: 0</p>
+            </div>
+          </div>
+
+          <div class="timer-block" aria-label="Question timer">
+            <div class="timer-label-row">
+              <span class="timer-label">Time left</span>
+              <span id="timerText" class="timer-text">10s</span>
+            </div>
+            <div class="timer-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+              <div id="timerFill" class="timer-fill"></div>
+            </div>
+          </div>
+
+          <div class="progress-block" aria-label="Quiz progress">
+            <div class="progress-label-row">
+              <span class="progress-label">Progress</span>
+              <span id="progressText" class="progress-text">0%</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+          </div>
+
+          <div class="question-box">
+            <h3 id="questionText">Question text will appear here.</h3>
+          </div>
+
+          <div id="answerButtons" class="answer-grid"></div>
+
+          <div class="feedback-area">
+            <p id="feedbackText" class="feedback" aria-live="polite"></p>
+          </div>
+
+          <div class="quiz-actions">
+            <button id="nextBtn" class="primary-btn" disabled>Auto Next</button>
+            <button id="restartBtn" class="secondary-btn">Restart Quiz</button>
+            <button id="homeBtn" class="ghost-btn">Back to Home</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT SCREEN -->
+      <section id="resultScreen" class="screen">
+        <div class="panel result-panel">
+          <h2>Quiz Completed!</h2>
+          <div class="result-box">
+            <p id="resultText" class="result-score">You scored 0 out of 5.</p>
+            <p id="resultPercent" class="result-percent">0%</p>
+            <p id="resultMessage" class="result-message"></p>
+          </div>
+
+          <div class="quiz-actions">
+            <button id="playAgainBtn" class="primary-btn">Play Again</button>
+            <button id="resultHomeBtn" class="secondary-btn">Back to Home</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
